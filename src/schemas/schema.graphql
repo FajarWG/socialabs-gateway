@@ -1,0 +1,28 @@
+type Mutation {
+  createProject(userId: String!, data: CreateProjectInput!): Project!
+}
+
+type Mutation {
+  loginUser(username: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  accessToken: String!
+  refreshToken: String
+  user: User
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String
+}
+
+type LoginResponse {
+  message: String!
+  accessToken: String!
+}
+
+type Mutation {
+  login(email: String!, password: String!): LoginResponse!
+}

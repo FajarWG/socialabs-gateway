@@ -1,24 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { User } from './user.model';
+import { LoginRequest, RegisterRequest } from './user.dto';
 
 @Injectable()
 export class UserService {
-  private readonly userApiUrl = 'https://dummyjson.com/users';
+  private readonly userApiUrl = 'http://localhost:3000';
 
-  async getUserByEmail(id: string): Promise<User> {
-    const response = await axios.get(`${this.userApiUrl}/${id}`);
+  async login(data: LoginRequest) {
+    const response = await axios.post(`${this.userApiUrl}/auth/login`, data);
     return response.data;
   }
 
-  async createNewUser(user: User): Promise<User> {
-    const response = await axios.post(this.userApiUrl, user);
+  async register(data: RegisterRequest) {
+    const response = await axios.post(`${this.userApiUrl}/auth/register`, data);
     return response.data;
   }
 
-  async updateRefreshToken(id: string, refreshToken: string): Promise<User> {
-    const response = await axios.patch(`${this.userApiUrl}/${id}`, {
-      refreshToken,
+  async generateToken(user: any) {
+    const response = await axios.post(`${this.userApiUrl}/auth/token`, user);
+    return response.data;
+  }
+
+  async logout(userId: string) {
+    const response = await axios.post(`${this.userApiUrl}/auth/logout`, {
+      userId,
     });
     return response.data;
   }

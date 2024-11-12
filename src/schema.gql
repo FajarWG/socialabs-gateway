@@ -49,9 +49,14 @@ type User {
   name: String!
 }
 
+type CrawlingResponse {
+  data: String!
+}
+
 type Query {
   project(id: String!): ProjectType!
   getAllProjects(userId: String!, page: Int!, limit: Int!): [ProjectType!]!
+  getByKeyword(keyword: String!, start_date: String!, end_date: String!): String!
 }
 
 type Mutation {
@@ -62,6 +67,7 @@ type Mutation {
   generateToken(refreshToken: String!): AuthResponse!
   logout: String!
   currentUser: User!
+  crawling(access_token: String!, keywords: String!, total_tweet: Float!, projectId: String!): CrawlingResponse!
 }
 
 input ProjectDto {

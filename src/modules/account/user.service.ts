@@ -8,6 +8,7 @@ export class UserService {
 
   async login(data: LoginRequest) {
     const response = await axios.post(`${this.userApiUrl}/auth/login`, data);
+
     return response.data;
   }
 
@@ -16,14 +17,30 @@ export class UserService {
     return response.data;
   }
 
-  async generateToken(user: any) {
-    const response = await axios.post(`${this.userApiUrl}/auth/token`, user);
+  async generateToken(refreshToken: string) {
+    console.log(refreshToken);
+    const response = await axios.post(
+      `${this.userApiUrl}/auth/generate-token`,
+      refreshToken,
+    );
+
+    console.log(response.data);
+
     return response.data;
   }
 
   async logout(userId: string) {
     const response = await axios.post(`${this.userApiUrl}/auth/logout`, {
       userId,
+    });
+    return response.data;
+  }
+
+  async currentUser(token: string) {
+    const response = await axios.get(`${this.userApiUrl}/auth/current-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   }

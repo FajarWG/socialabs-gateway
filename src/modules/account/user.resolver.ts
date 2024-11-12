@@ -23,6 +23,7 @@ export class UserResolver {
     return {
       message: 'Login successful',
       accessToken: tokens.data.accessToken,
+      refreshToken: tokens.data.refreshToken,
     };
   }
 
@@ -44,12 +45,13 @@ export class UserResolver {
   }
 
   @Mutation(() => AuthResponse)
-  async generateToken(@Context() context: any): Promise<AuthResponse> {
-    const user = context.req.user;
-    const tokens = await this.userService.generateToken(user);
+  async generateToken(@Args('refreshToken') refreshToken: string) {
+    const data = await this.userService.generateToken(refreshToken);
+    console.log(data);
     return {
       message: 'Token generated successfully',
-      accessToken: tokens.accessToken,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
     };
   }
 
@@ -62,6 +64,13 @@ export class UserResolver {
 
   @Mutation(() => User)
   async currentUser(@Context() context: any): Promise<User> {
-    return context.req.user;
+    const token = context.req.headers.authorization.split(' ')[1];
+    const user = await this.userService.currentUser(token);
+    const { data } = user;
+    return {
+      _id: data._id,
+      email: data.email,
+      name: data.name,
+    };
   }
 }

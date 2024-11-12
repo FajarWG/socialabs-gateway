@@ -7,6 +7,9 @@ export class AuthResponse {
 
   @Field()
   accessToken: string;
+
+  @Field()
+  refreshToken?: string;
 }
 
 @ObjectType()
@@ -22,12 +25,15 @@ export class LoginResponse {
 
   @Field()
   accessToken: string;
+
+  @Field()
+  refreshToken: string;
 }
 
 @ObjectType()
 export class User {
   @Field()
-  id: string;
+  _id: string;
 
   @Field()
   email: string;

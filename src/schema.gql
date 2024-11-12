@@ -30,6 +30,7 @@ scalar DateTime
 type AuthResponse {
   message: String!
   accessToken: String!
+  refreshToken: String!
 }
 
 type RegisterResponse {
@@ -39,17 +40,18 @@ type RegisterResponse {
 type LoginResponse {
   message: String!
   accessToken: String!
+  refreshToken: String!
 }
 
 type User {
-  id: String!
+  _id: String!
   email: String!
   name: String!
 }
 
 type Query {
   project(id: String!): ProjectType!
-  projects(userId: String!, page: Int!, limit: Int!): [ProjectType!]!
+  getAllProjects(userId: String!, page: Int!, limit: Int!): [ProjectType!]!
 }
 
 type Mutation {
@@ -57,7 +59,7 @@ type Mutation {
   updateProjectStatus(id: String!, status: ProjectStatusInput!): ProjectType!
   login(email: String!, password: String!): LoginResponse!
   register(email: String!, name: String!, password: String!, confirmPassword: String!): RegisterResponse!
-  generateToken: AuthResponse!
+  generateToken(refreshToken: String!): AuthResponse!
   logout: String!
   currentUser: User!
 }

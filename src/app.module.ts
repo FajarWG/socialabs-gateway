@@ -5,6 +5,8 @@ import { join } from 'path';
 import { ProjectModule } from './modules/project/project.module';
 import { UserModule } from './modules/account/user.module';
 import { DataGatheringModule } from './modules/data-gathering/data-gathering.module';
+import { ChatbotModule } from './modules/chatbot/chatbot.module';
+import { EmotionModule } from './modules/emotion/emotion.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { DataGatheringModule } from './modules/data-gathering/data-gathering.mod
     ProjectModule,
     UserModule,
     DataGatheringModule,
+    ChatbotModule,
+    EmotionModule,
   ],
 })
 export class AppModule {}

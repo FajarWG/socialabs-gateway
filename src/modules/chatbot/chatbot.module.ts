@@ -7,4 +7,4 @@ import { ChatbotResolver } from './chatbot.resolver';
   imports: [HttpModule],
   providers: [ChatbotService, ChatbotResolver],
 })
-export class DataGatheringModule {}
+export class ChatbotModule {}

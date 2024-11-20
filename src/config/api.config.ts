@@ -5,4 +5,5 @@ export const apiURL = {
   dataGathering: 'https://localhost:5000/api/twitter',
   sentiment: 'https://localhost:7000',
   emotion: 'https://localhost:9000',
+  sna: 'https://localhost:8000',
 };

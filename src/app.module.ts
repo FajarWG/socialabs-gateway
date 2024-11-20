@@ -7,6 +7,7 @@ import { UserModule } from './modules/account/user.module';
 import { DataGatheringModule } from './modules/data-gathering/data-gathering.module';
 import { ChatbotModule } from './modules/chatbot/chatbot.module';
 import { EmotionModule } from './modules/emotion/emotion.module';
+import { SNAModule } from './modules/sna/sentiment.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { EmotionModule } from './modules/emotion/emotion.module';
     DataGatheringModule,
     ChatbotModule,
     EmotionModule,
+    SNAModule,
   ],
 })
 export class AppModule {}

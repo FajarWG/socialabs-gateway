@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { ProjectType, ProjectStatusInput } from './project.model';
-import { ProjectDto } from './project.dto';
+import { ProjectResults, ProjectType } from './project.model';
+import { CreateProjectInput, ProjectStatusInput } from './project.dto';
 
 @Injectable()
 export class ProjectService {
   private readonly projectApiUrl = 'http://localhost:4000/project';
 
-  async createProject(data: ProjectDto): Promise<ProjectType> {
+  async createProject(data: CreateProjectInput): Promise<ProjectType> {
     const response = await axios.post(`${this.projectApiUrl}`, {
       ...data,
     });
@@ -18,7 +18,7 @@ export class ProjectService {
     userId: string,
     page: number,
     limit: number,
-  ): Promise<ProjectType[]> {
+  ): Promise<ProjectResults> {
     const response = await axios.get(`${this.projectApiUrl}`, {
       params: { userId, page, limit },
     });

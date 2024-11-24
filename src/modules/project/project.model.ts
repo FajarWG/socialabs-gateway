@@ -1,4 +1,4 @@
-import { Field, ObjectType, InputType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 class ProjectStatusType {
@@ -13,12 +13,30 @@ class ProjectStatusType {
 
   @Field()
   sna: boolean;
+
+  @Field()
+  _id: string;
+}
+
+@ObjectType()
+export class ProjectResults {
+  @Field(() => [ProjectType])
+  projects: ProjectType[];
+
+  @Field()
+  total: number;
+
+  @Field()
+  page: number;
+
+  @Field()
+  limit: number;
 }
 
 @ObjectType()
 export class ProjectType {
   @Field()
-  id: string;
+  _id: string;
 
   @Field()
   title: string;
@@ -39,26 +57,14 @@ export class ProjectType {
   language: string;
 
   @Field()
-  start_date_crawl: Date;
+  start_date_crawl: string;
 
   @Field()
-  end_date_crawl: Date;
+  end_date_crawl: string;
+
+  @Field()
+  createdAt: string;
 
   @Field(() => ProjectStatusType)
   project_status: ProjectStatusType;
-}
-
-@InputType()
-export class ProjectStatusInput {
-  @Field({ nullable: true })
-  topic_modelling?: boolean;
-
-  @Field({ nullable: true })
-  sentiment?: boolean;
-
-  @Field({ nullable: true })
-  emotion?: boolean;
-
-  @Field({ nullable: true })
-  sna?: boolean;
 }

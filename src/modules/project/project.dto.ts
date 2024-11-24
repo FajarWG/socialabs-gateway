@@ -1,25 +1,40 @@
 import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
-export class ProjectDto {
+export class CreateProjectInput {
   @Field()
-  title: string;
+  category: string;
 
   @Field()
   description: string;
 
   @Field()
-  keyword: string;
+  end_date_crawl: string;
 
   @Field()
-  topicCategory: string;
+  keyword: string;
 
   @Field()
   language: string;
 
   @Field()
-  startDateCrawl: Date;
+  start_date_crawl: string;
 
   @Field()
-  endDateCrawl: Date;
+  title: string;
+}
+
+@InputType()
+export class ProjectStatusInput {
+  @Field({ nullable: true })
+  topic_modelling?: boolean;
+
+  @Field({ nullable: true })
+  sentiment?: boolean;
+
+  @Field({ nullable: true })
+  emotion?: boolean;
+
+  @Field({ nullable: true })
+  sna?: boolean;
 }

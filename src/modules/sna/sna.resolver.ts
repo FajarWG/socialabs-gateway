@@ -1,12 +1,11 @@
 import { Resolver, Args, Query } from '@nestjs/graphql';
-import { SNAService } from './sentiment.service';
+import { SNAService } from './sna.service';
 import {
   BuzzerByIdResponse,
   BuzzerResponse,
   CommunityByIdResponse,
-  CommunityResponse,
-  GraphResponse,
-} from './sentiment.model';
+  InsideCommunityData,
+} from './sna.model';
 import {
   BuzzerByIdRequest,
   BuzzerRequest,
@@ -38,13 +37,13 @@ export class SNAResolver {
     };
   }
 
-  @Query(() => GraphResponse)
+  @Query(() => InsideCommunityData)
   async getGraph(
     @Args('keyword') keyword: string,
     @Args('num_topics') num_topics: number,
     @Args('num_tweets') num_tweets: number,
     @Args('topic') topic: string,
-  ): Promise<GraphResponse> {
+  ): Promise<InsideCommunityData> {
     const data_request: GraphRequest = {
       keyword,
       num_topics,
@@ -58,13 +57,13 @@ export class SNAResolver {
     };
   }
 
-  @Query(() => CommunityResponse)
+  @Query(() => InsideCommunityData)
   async getCommunity(
     @Args('keyword') keyword: string,
     @Args('num_topics') num_topics: number,
     @Args('num_tweets') num_tweets: number,
     @Args('topic') topic: string,
-  ): Promise<CommunityResponse> {
+  ): Promise<InsideCommunityData> {
     const data_request: CommunityRequest = {
       keyword,
       num_topics,

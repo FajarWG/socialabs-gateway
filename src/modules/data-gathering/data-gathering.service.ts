@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { getByKeywordRequest, CrawlingRequest } from './data-gathering.dto';
+import { apiURL } from 'src/config/api.config';
 
 @Injectable()
 export class DataGatheringService {
-  private readonly dataGatheringApiUrl = 'http://localhost:5000/api/twitter';
+  private readonly dataGatheringApiUrl = apiURL.dataGathering;
 
   async getByKeyword(data: getByKeywordRequest) {
     const response = await axios.get(

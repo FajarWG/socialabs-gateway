@@ -7,7 +7,7 @@ import { UserModule } from './modules/account/user.module';
 import { DataGatheringModule } from './modules/data-gathering/data-gathering.module';
 import { ChatbotModule } from './modules/chatbot/chatbot.module';
 import { EmotionModule } from './modules/emotion/emotion.module';
-import { SNAModule } from './modules/sna/sentiment.module';
+import { SNAModule } from './modules/sna/sna.module';
 
 @Module({
   imports: [
@@ -15,6 +15,14 @@ import { SNAModule } from './modules/sna/sentiment.module';
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req }) => {
+        const authHeader = req.headers.authorization || '';
+        const token = authHeader.startsWith('Bearer ')
+          ? authHeader.split(' ')[1]
+          : null;
+
+        return { token };
+      },
       playground: true,
     }),
     ProjectModule,

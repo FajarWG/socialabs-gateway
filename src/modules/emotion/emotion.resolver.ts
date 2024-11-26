@@ -38,6 +38,7 @@ export class EmotionResolver {
       project_id,
     };
     const results = await this.emotionService.visualizeEmotion(data_request);
+
     return {
       emotion: results.emotion,
       emotion_percentage: results.emotion_percentage,

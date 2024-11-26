@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { SNAService } from './sentiment.service';
-import { SNAResolver } from './sentiment.resolver';
+import { SNAService } from './sna.service';
+import { SNAResolver } from './sna.resolver';
 
 @Module({
   imports: [HttpModule],

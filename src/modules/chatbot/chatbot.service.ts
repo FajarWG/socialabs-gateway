@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { PromptRequest, QueryRequest } from './chatbot.dto';
+import { apiURL } from 'src/config/api.config';
 
 @Injectable()
 export class ChatbotService {
-  private readonly chatbotApiUrl = 'http://localhost:9100';
+  private readonly chatbotApiUrl = apiURL.chatbot;
 
   async getPrompt(data: PromptRequest) {
     const response = await axios.get(

@@ -11,9 +11,11 @@ import { apiURL } from 'src/config/api.config';
 
 @Injectable()
 export class SNAService {
+  private readonly snaApiUrl = apiURL.sna;
+
   async getBuzzer(data: BuzzerRequest) {
     const response = await axios.get(
-      `${apiURL.sna}/get-buzzer?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
+      `${this.snaApiUrl}/get-buzzer?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
     );
 
     return response.data;
@@ -21,7 +23,7 @@ export class SNAService {
 
   async getGraph(data: GraphRequest) {
     const response = await axios.get(
-      `${apiURL.sna}/graph?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
+      `${this.snaApiUrl}/graph?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
     );
 
     return response.data;
@@ -29,14 +31,14 @@ export class SNAService {
 
   async getCommunity(data: CommunityRequest) {
     const response = await axios.get(
-      `${apiURL.sna}/community?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
+      `${this.snaApiUrl}/community?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
     );
 
     return response.data;
   }
   async getBuzzerByProjectId(data: BuzzerByIdRequest) {
     const response = await axios.get(
-      `${apiURL.sna}/get-buzzer-by-project-id?&project_id=${data.project_id}`,
+      `${this.snaApiUrl}/get-buzzer-by-project-id?&project_id=${data.project_id}`,
     );
 
     return response.data;
@@ -44,7 +46,7 @@ export class SNAService {
 
   async getCommunityByProjectId(data: CommunityByIdRequest) {
     const response = await axios.get(
-      `${apiURL.sna}/get-community-by-project-id?&project_id=${data.project_id}`,
+      `${this.snaApiUrl}/get-community-by-project-id?&project_id=${data.project_id}`,
     );
 
     return response.data;

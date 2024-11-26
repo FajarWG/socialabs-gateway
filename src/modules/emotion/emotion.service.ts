@@ -5,10 +5,11 @@ import {
   EmotionByIdRequest,
   VisualizeEmotionRequest,
 } from './emotion.dto';
+import { apiURL } from 'src/config/api.config';
 
 @Injectable()
 export class EmotionService {
-  private readonly emotionApiUrl = 'http://localhost:9000';
+  private readonly emotionApiUrl = apiURL.emotion;
 
   async classifyEmotion(data: ClassifyEmotionRequest) {
     const response = await axios.post(

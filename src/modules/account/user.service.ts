@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { LoginRequest, RegisterRequest } from './user.dto';
+import { apiURL } from 'src/config/api.config';
 
 @Injectable()
 export class UserService {
-  private readonly userApiUrl = 'http://localhost:3000';
+  private readonly userApiUrl = apiURL.account;
 
   async login(data: LoginRequest) {
     const response = await axios.post(`${this.userApiUrl}/auth/login`, data);

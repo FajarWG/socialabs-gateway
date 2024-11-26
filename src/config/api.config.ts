@@ -1,9 +1,9 @@
 export const apiURL = {
-  account: 'https://localhost:3000',
-  project: 'https://localhost:4000',
-  chatbot: 'https://localhost:9100',
-  dataGathering: 'https://localhost:5000/api/twitter',
-  sentiment: 'https://localhost:7000',
-  emotion: 'https://localhost:9000',
-  sna: 'https://localhost:8000',
+  account: process.env.ACCOUNT_URL,
+  project: process.env.PROJECT_URL,
+  chatbot: process.env.CHATBOT_URL,
+  dataGathering: process.env.DATA_GATHERING_URL,
+  sentiment: process.env.SENTIMENT_URL,
+  emotion: process.env.EMOTION_URL,
+  sna: process.env.SNA_URL,
 };

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule } from '@nestjs/config';
 
@@ -11,6 +11,7 @@ import { ChatbotModule } from './modules/chatbot/chatbot.module';
 import { EmotionModule } from './modules/emotion/emotion.module';
 import { SNAModule } from './modules/sna/sna.module';
 import apiConfig from './config/api.config';
+import { RequestContextMiddleware } from './utils/RequestContextMiddleware';
 
 @Module({
   imports: [
@@ -40,4 +41,8 @@ import apiConfig from './config/api.config';
     SNAModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestContextMiddleware).forRoutes('*');
+  }
+}

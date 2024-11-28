@@ -140,8 +140,8 @@ type InsideCommunityData {
 }
 
 type Query {
-  project(id: String!): ProjectType!
-  getAllProjects(userId: String!, page: Int!, limit: Int!): ProjectResults!
+  getProject(id: String!): ProjectType!
+  getAllProjects(userId: String!, page: Int!, limit: Int!, name: String! = " "): ProjectResults!
   getByKeyword(keyword: String!, start_date: String!, end_date: String!): String!
   getPrompt(project_id: String!): String!
   visualizeEmotion(topic: String!, project_id: String!, model_type: String!): VisualizeEmotionResponse!

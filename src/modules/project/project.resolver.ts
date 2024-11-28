@@ -7,7 +7,7 @@ import { CreateProjectInput, ProjectStatusInput } from './project.dto';
 export class ProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
-  @Query(() => ProjectType, { name: 'project' })
+  @Query(() => ProjectType)
   async getProject(@Args('id') id: string): Promise<ProjectType> {
     const results = await this.projectService.getProjectById(id);
     return {
@@ -36,12 +36,15 @@ export class ProjectResolver {
     @Args('userId') userId: string,
     @Args('page', { type: () => Int }) page: number,
     @Args('limit', { type: () => Int }) limit: number,
+    @Args('name', { defaultValue: ' ' }) name: string,
   ): Promise<ProjectResults> {
     const results = await this.projectService.getAllProjects(
       userId,
       page,
       limit,
+      name,
     );
+
     return {
       projects: results.projects as ProjectType[],
       total: results.total,
@@ -69,6 +72,7 @@ export class ProjectResolver {
       start_date_crawl,
       title,
     };
+
     return this.projectService.createProject(data);
   }
 

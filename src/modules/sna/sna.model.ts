@@ -49,7 +49,7 @@ export class CommunityByIdResponse {
 }
 
 @ObjectType()
-export class Link {
+export class LinkCommunity {
   @Field(() => String)
   full_text: string;
 
@@ -73,7 +73,7 @@ export class Link {
 }
 
 @ObjectType()
-export class Node {
+export class NodeCommunity {
   @Field(() => Number)
   community: number;
 
@@ -92,9 +92,9 @@ export class Node {
 
 @ObjectType()
 export class InsideCommunityData {
-  @Field(() => [Link])
-  links: Link[];
+  @Field(() => [LinkCommunity])
+  links: LinkCommunity[];
 
-  @Field(() => [Node])
-  nodes: Node[];
+  @Field(() => [NodeCommunity])
+  nodes: NodeCommunity[];
 }

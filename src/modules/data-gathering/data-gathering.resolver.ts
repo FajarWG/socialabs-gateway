@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { DataGatheringService } from './data-gathering.service';
-import { CrawlingResponse } from './data-gathering.model';
+import { CrawlingResponse } from '../shared.model';
 import { CrawlingRequest } from './data-gathering.dto';
 
 @Resolver()

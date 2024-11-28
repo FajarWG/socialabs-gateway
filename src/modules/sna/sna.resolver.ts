@@ -2,13 +2,13 @@ import { Resolver, Args, Query } from '@nestjs/graphql';
 import { SNAService } from './sna.service';
 import {
   BuzzerByIdResponse,
-  BuzzerResponse,
+  // BuzzerResponse,
   CommunityByIdResponse,
   InsideCommunityData,
 } from './sna.model';
 import {
   BuzzerByIdRequest,
-  BuzzerRequest,
+  // BuzzerRequest,
   CommunityByIdRequest,
   CommunityRequest,
   GraphRequest,
@@ -18,24 +18,24 @@ import {
 export class SNAResolver {
   constructor(private readonly snaService: SNAService) {}
 
-  @Query(() => BuzzerResponse)
-  async getBuzzer(
-    @Args('keyword') keyword: string,
-    @Args('num_topics') num_topics: number,
-    @Args('num_tweets') num_tweets: number,
-    @Args('topic') topic: string,
-  ): Promise<BuzzerResponse> {
-    const data_request: BuzzerRequest = {
-      keyword,
-      num_topics,
-      num_tweets,
-      topic,
-    };
-    const results = await this.snaService.getBuzzer(data_request);
-    return {
-      data_buzzer: results.data_buzzer,
-    };
-  }
+  // @Query(() => BuzzerResponse)
+  // async getBuzzer(
+  //   @Args('keyword') keyword: string,
+  //   @Args('num_topics') num_topics: number,
+  //   @Args('num_tweets') num_tweets: number,
+  //   @Args('topic') topic: string,
+  // ): Promise<BuzzerResponse> {
+  //   const data_request: BuzzerRequest = {
+  //     keyword,
+  //     num_topics,
+  //     num_tweets,
+  //     topic,
+  //   };
+  //   const results = await this.snaService.getBuzzer(data_request);
+  //   return {
+  //     data_buzzer: results.data_buzzer,
+  //   };
+  // }
 
   @Query(() => InsideCommunityData)
   async getGraph(

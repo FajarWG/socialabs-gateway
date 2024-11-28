@@ -7,25 +7,29 @@ type ProjectStatusType {
   sentiment: Boolean!
   emotion: Boolean!
   sna: Boolean!
+  _id: String!
+}
+
+type ProjectResults {
+  projects: [ProjectType!]!
+  total: Float!
+  page: Float!
+  limit: Float!
 }
 
 type ProjectType {
-  id: String!
+  _id: String!
   title: String!
   description: String!
   keyword: String!
   userId: String!
   topic_category: String!
   language: String!
-  start_date_crawl: DateTime!
-  end_date_crawl: DateTime!
+  start_date_crawl: String!
+  end_date_crawl: String!
+  createdAt: String!
   project_status: ProjectStatusType!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type AuthResponse {
   message: String!
@@ -51,33 +55,113 @@ type User {
 
 type CrawlingResponse {
   data: String!
+  filename: String!
+}
+
+type VisualizeEmotionResponse {
+  emotion: [InsideEmotionVisualize!]!
+  emotion_percentage: String!
+  emotion_percentage_by_topic: String!
+  total_data: Float!
+}
+
+type EmotionProbability {
+  Anger: Float!
+  Fear: Float!
+  Joy: Float!
+  Love: Float!
+  Neutral: Float!
+  Sad: Float!
+}
+
+type InsideEmotionVisualize {
+  _id: String!
+  conversation_id_str: String!
+  full_text: String!
+  id_str: String!
+  in_reply_to_screen_name: String!
+  predicted_emotions_bilstm: String!
+  predicted_emotions_bilstm_probability: EmotionProbability!
+  predicted_emotions_cnn: String!
+  predicted_emotions_cnn_probability: EmotionProbability!
+  processed_text: String!
+  projectId: String!
+  topic: String!
+  tweet_url: String!
+}
+
+type ClassifyEmotionResponse {
+  success: Boolean!
+  total_data: Float!
+  data: String!
+}
+
+type InsideBuzzerData {
+  BEC: Float!
+  BEC_Norm: Float!
+  EVC: Float!
+  final_measure: Float!
+  node: String!
+  projectId: String!
+  tweet_url: String!
+}
+
+type BuzzerByIdResponse {
+  data: [InsideBuzzerData!]!
+  total_data: Float!
+}
+
+type CommunityByIdResponse {
+  data: [InsideCommunityData!]!
+  total_data: Float!
+}
+
+type LinkCommunity {
+  full_text: String!
+  source: String!
+  source_community: Float!
+  target: String!
+  target_community: Float!
+  topic: String!
+  url_tweet: String!
+}
+
+type NodeCommunity {
+  community: Float!
+  id: String!
+  name: String!
+  profile_url: String!
+  val: Float!
+}
+
+type InsideCommunityData {
+  links: [LinkCommunity!]!
+  nodes: [NodeCommunity!]!
 }
 
 type Query {
   project(id: String!): ProjectType!
-  getAllProjects(userId: String!, page: Int!, limit: Int!): [ProjectType!]!
+  getAllProjects(userId: String!, page: Int!, limit: Int!): ProjectResults!
   getByKeyword(keyword: String!, start_date: String!, end_date: String!): String!
+  getPrompt(project_id: String!): String!
+  visualizeEmotion(topic: String!, project_id: String!, model_type: String!): VisualizeEmotionResponse!
+  getGraph(keyword: String!, num_topics: Float!, num_tweets: Float!, topic: String!): InsideCommunityData!
+  getCommunity(keyword: String!, num_topics: Float!, num_tweets: Float!, topic: String!): InsideCommunityData!
+  getBuzzerByProject(project_id: String!): BuzzerByIdResponse!
+  getCommunityByProject(project_id: String!): CommunityByIdResponse!
 }
 
 type Mutation {
-  createProject(data: ProjectDto!): ProjectType!
-  updateProjectStatus(id: String!, status: ProjectStatusInput!): ProjectType!
+  createProject(category: String!, description: String!, end_date_crawl: String!, keyword: String!, language: String!, start_date_crawl: String!, title: String!): ProjectType!
+  updateProjectStatus(id: String!, projectStatus: ProjectStatusInput!): ProjectType!
   login(email: String!, password: String!): LoginResponse!
   register(email: String!, name: String!, password: String!, confirmPassword: String!): RegisterResponse!
   generateToken(refreshToken: String!): AuthResponse!
   logout: String!
   currentUser: User!
   crawling(access_token: String!, keywords: String!, total_tweet: Float!, projectId: String!): CrawlingResponse!
-}
-
-input ProjectDto {
-  title: String!
-  description: String!
-  keyword: String!
-  topicCategory: String!
-  language: String!
-  startDateCrawl: DateTime!
-  endDateCrawl: DateTime!
+  postQuery(query: String!, project_id: String!): CrawlingResponse!
+  classifyEmotion(tweet_ids: String!): ClassifyEmotionResponse!
 }
 
 input ProjectStatusInput {

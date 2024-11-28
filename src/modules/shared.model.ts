@@ -4,5 +4,7 @@ import { ObjectType, Field } from '@nestjs/graphql';
 export class CrawlingResponse {
   @Field()
   data: string;
+
+  @Field()
   filename: string;
 }

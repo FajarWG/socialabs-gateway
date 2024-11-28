@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import {
   ClassifyEmotionRequest,
-  EmotionByIdRequest,
+  // EmotionByIdRequest,
   VisualizeEmotionRequest,
 } from './emotion.dto';
 import { apiURL } from 'src/config/api.config';
@@ -28,11 +28,11 @@ export class EmotionService {
     return response.data;
   }
 
-  async getEmotionByProjectId(data: EmotionByIdRequest) {
-    const response = await axios.get(
-      `${this.emotionApiUrl}/get-emotion-by-project-id?&project_id=${data.project_id}`,
-    );
+  // async getEmotionByProjectId(data: EmotionByIdRequest) {
+  //   const response = await axios.get(
+  //     `${this.emotionApiUrl}/get-emotion-by-project-id?&project_id=${data.project_id}`,
+  //   );
 
-    return response.data;
-  }
+  //   return response.data;
+  // }
 }

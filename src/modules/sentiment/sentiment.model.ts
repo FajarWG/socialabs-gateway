@@ -2,7 +2,7 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class VisualizeSentimentResponse {
-  @Field()
+  @Field(() => [])
   sentiment: [];
 
   @Field()
@@ -29,7 +29,7 @@ export class ClassifySentimentResponse {
 
 @ObjectType()
 export class SentimentByIdResponse {
-  @Field()
+  @Field(() => [])
   data: [];
 
   @Field()

@@ -2,10 +2,10 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { EmotionService } from './emotion.service';
 import {
   ClassifyEmotionResponse,
-  EmotionByIdResponse,
+  // EmotionByIdResponse,
   VisualizeEmotionResponse,
 } from './emotion.model';
-import { EmotionByIdRequest, VisualizeEmotionRequest } from './emotion.dto';
+import { VisualizeEmotionRequest } from './emotion.dto';
 
 @Resolver()
 export class EmotionResolver {
@@ -47,18 +47,18 @@ export class EmotionResolver {
     };
   }
 
-  @Query(() => EmotionByIdResponse)
-  async getEmotionByProject(
-    @Args('project_id') project_id: string,
-  ): Promise<EmotionByIdResponse> {
-    const data_request: EmotionByIdRequest = {
-      project_id,
-    };
-    const results =
-      await this.emotionService.getEmotionByProjectId(data_request);
-    return {
-      data: results.data,
-      total_data: results.total_data,
-    };
-  }
+  // @Query(() => EmotionByIdResponse)
+  // async getEmotionByProject(
+  //   @Args('project_id') project_id: string,
+  // ): Promise<EmotionByIdResponse> {
+  //   const data_request: EmotionByIdRequest = {
+  //     project_id,
+  //   };
+  //   const results =
+  //     await this.emotionService.getEmotionByProjectId(data_request);
+  //   return {
+  //     data: results.data,
+  //     total_data: results.total_data,
+  //   };
+  // }
 }

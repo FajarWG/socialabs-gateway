@@ -1,7 +1,8 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { ChatbotService } from './chatbot.service';
-import { CrawlingResponse } from './chatbot.model';
+
 import { QueryRequest } from './chatbot.dto';
+import { CrawlingResponse } from '../shared.model';
 
 @Resolver()
 export class ChatbotResolver {
@@ -26,6 +27,9 @@ export class ChatbotResolver {
       project_id,
     };
     const results = await this.chatbotService.query(query_chat);
-    return results;
+    return {
+      data: results.data,
+      filename: results.filename,
+    };
   }
 }

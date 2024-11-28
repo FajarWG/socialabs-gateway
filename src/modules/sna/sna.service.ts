@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import {
   BuzzerByIdRequest,
-  BuzzerRequest,
+  // BuzzerRequest,
   CommunityByIdRequest,
   CommunityRequest,
   GraphRequest,
@@ -13,13 +13,13 @@ import { apiURL } from 'src/config/api.config';
 export class SNAService {
   private readonly snaApiUrl = apiURL.sna;
 
-  async getBuzzer(data: BuzzerRequest) {
-    const response = await axios.get(
-      `${this.snaApiUrl}/get-buzzer?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
-    );
+  // async getBuzzer(data: BuzzerRequest) {
+  //   const response = await axios.get(
+  //     `${this.snaApiUrl}/get-buzzer?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
+  //   );
 
-    return response.data;
-  }
+  //   return response.data;
+  // }
 
   async getGraph(data: GraphRequest) {
     const response = await axios.get(

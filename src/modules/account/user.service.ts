@@ -1,27 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { LoginRequest, RegisterRequest } from './user.dto';
-import { apiURL } from 'src/config/api.config';
+
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UserService {
-  private readonly userApiUrl = apiURL.account;
+  constructor(private configService: ConfigService) {}
 
   async login(data: LoginRequest) {
-    const response = await axios.post(`${this.userApiUrl}/auth/login`, data);
+    // const response = await axios.post(
+    //   `${this.configService.get<string>('apiService.account')}/auth/login`,
+    //   data,
+    // );
 
-    return response.data;
+    // return response.data;
+
+    try {
+      const response = await axios.post(
+        `${this.configService.get<string>('apiService.account')}/auth/login`,
+        data,
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async register(data: RegisterRequest) {
-    const response = await axios.post(`${this.userApiUrl}/auth/register`, data);
-    return response.data;
+    try {
+      const response = await axios.post(
+        `${this.configService.get<string>('apiService.account')}/auth/register`,
+
+        data,
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async generateToken(refreshToken: string) {
     console.log(refreshToken);
     const response = await axios.post(
-      `${this.userApiUrl}/auth/generate-token`,
+      `${this.configService.get<string>('apiService.account')}/auth/generate-token`,
       refreshToken,
     );
 
@@ -31,18 +59,24 @@ export class UserService {
   }
 
   async logout(userId: string) {
-    const response = await axios.post(`${this.userApiUrl}/auth/logout`, {
-      userId,
-    });
+    const response = await axios.post(
+      `${this.configService.get<string>('apiService.account')}/auth/logout`,
+      {
+        userId,
+      },
+    );
     return response.data;
   }
 
   async currentUser(token: string) {
-    const response = await axios.get(`${this.userApiUrl}/auth/current-user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.get(
+      `${this.configService.get<string>('apiService.account')}/auth/current-user`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return response.data;
   }
 }

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ConfigModule } from '@nestjs/config';
+
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ProjectModule } from './modules/project/project.module';
@@ -8,9 +10,14 @@ import { DataGatheringModule } from './modules/data-gathering/data-gathering.mod
 import { ChatbotModule } from './modules/chatbot/chatbot.module';
 import { EmotionModule } from './modules/emotion/emotion.module';
 import { SNAModule } from './modules/sna/sna.module';
+import apiConfig from './config/api.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [apiConfig],
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,

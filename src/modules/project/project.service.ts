@@ -2,16 +2,20 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ProjectResults, ProjectType } from './project.model';
 import { CreateProjectInput, ProjectStatusInput } from './project.dto';
-import { apiURL } from 'src/config/api.config';
+
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProjectService {
-  private readonly projectApiUrl = apiURL.project;
+  constructor(private configService: ConfigService) {}
 
   async createProject(data: CreateProjectInput): Promise<ProjectType> {
-    const response = await axios.post(`${this.projectApiUrl}`, {
-      ...data,
-    });
+    const response = await axios.post(
+      `${this.configService.get<string>('apiService.project')}`,
+      {
+        ...data,
+      },
+    );
     return response.data;
   }
 
@@ -20,14 +24,19 @@ export class ProjectService {
     page: number,
     limit: number,
   ): Promise<ProjectResults> {
-    const response = await axios.get(`${this.projectApiUrl}`, {
-      params: { userId, page, limit },
-    });
+    const response = await axios.get(
+      `${this.configService.get<string>('apiService.project')}`,
+      {
+        params: { userId, page, limit },
+      },
+    );
     return response.data;
   }
 
   async getProjectById(id: string): Promise<ProjectType> {
-    const response = await axios.get(`${this.projectApiUrl}/${id}`);
+    const response = await axios.get(
+      `${this.configService.get<string>('apiService.project')}/${id}`,
+    );
     return response.data;
   }
 
@@ -36,7 +45,7 @@ export class ProjectService {
     projectStatus: ProjectStatusInput,
   ): Promise<ProjectType> {
     const response = await axios.patch(
-      `${this.projectApiUrl}/${id}/status`,
+      `${this.configService.get<string>('apiService.project')}/${id}/status`,
       projectStatus,
     );
     return response.data;

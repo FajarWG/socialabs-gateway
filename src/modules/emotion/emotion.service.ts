@@ -5,15 +5,15 @@ import {
   // EmotionByIdRequest,
   VisualizeEmotionRequest,
 } from './emotion.dto';
-import { apiURL } from 'src/config/api.config';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class EmotionService {
-  private readonly emotionApiUrl = apiURL.emotion;
+  constructor(private configService: ConfigService) {}
 
   async classifyEmotion(data: ClassifyEmotionRequest) {
     const response = await axios.post(
-      `${this.emotionApiUrl}/classify-emotion`,
+      `${this.configService.get<string>('apiService.emotion')}/classify-emotion`,
       data,
     );
 
@@ -22,7 +22,7 @@ export class EmotionService {
 
   async visualizeEmotion(data: VisualizeEmotionRequest) {
     const response = await axios.get(
-      `${this.emotionApiUrl}/visualize-emotion?topic=${data.topic}&project_id=${data.project_id}&model_type=${data.model_type}`,
+      `${this.configService.get<string>('apiService.emotion')}/visualize-emotion?topic=${data.topic}&project_id=${data.project_id}&model_type=${data.model_type}`,
     );
 
     return response.data;
@@ -30,7 +30,7 @@ export class EmotionService {
 
   // async getEmotionByProjectId(data: EmotionByIdRequest) {
   //   const response = await axios.get(
-  //     `${this.emotionApiUrl}/get-emotion-by-project-id?&project_id=${data.project_id}`,
+  //     `${this.configService.get<string>('apiService.emotion')}/get-emotion-by-project-id?&project_id=${data.project_id}`,
   //   );
 
   //   return response.data;

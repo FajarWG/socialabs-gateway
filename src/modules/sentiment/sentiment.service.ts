@@ -5,14 +5,16 @@ import {
   SentimentByIdRequest,
   VisualizeSentimentRequest,
 } from './sentiment.dto';
-import { apiURL } from 'src/config/api.config';
+
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SentimentService {
-  private readonly sentimentApiUrl = apiURL.sentiment;
+  constructor(private configService: ConfigService) {}
+
   async classifySentiment(data: ClassifySentimentRequest) {
     const response = await axios.post(
-      `${this.sentimentApiUrl}/classify-sentiment`,
+      `${this.configService.get<string>('apiService.sentiment')}/classify-sentiment`,
       data,
     );
 
@@ -21,7 +23,7 @@ export class SentimentService {
 
   async visualizeSentiment(data: VisualizeSentimentRequest) {
     const response = await axios.get(
-      `${this.sentimentApiUrl}/visualize-sentiment?topic=${data.topic}&project_id=${data.project_id}&model_type=${data.model_type}`,
+      `${this.configService.get<string>('apiService.sentiment')}/visualize-sentiment?topic=${data.topic}&project_id=${data.project_id}&model_type=${data.model_type}`,
     );
 
     return response.data;
@@ -29,7 +31,7 @@ export class SentimentService {
 
   async getSentimentByProjectId(data: SentimentByIdRequest) {
     const response = await axios.get(
-      `${this.sentimentApiUrl}/get-sentiment-by-project-id?&project_id=${data.project_id}`,
+      `${this.configService.get<string>('apiService.sentiment')}/get-sentiment-by-project-id?&project_id=${data.project_id}`,
     );
 
     return response.data;

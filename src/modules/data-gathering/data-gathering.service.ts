@@ -1,33 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { HttpException, Injectable } from '@nestjs/common';
+
 import { getByKeywordRequest, CrawlingRequest } from './data-gathering.dto';
-import { ConfigService } from '@nestjs/config';
+
+import { AxiosService } from 'src/utils/AxiosService';
 
 @Injectable()
 export class DataGatheringService {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly axiosService: AxiosService) {}
 
   async getByKeyword(data: getByKeywordRequest) {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.dataGathering')}/get-by-keyword?keyword=${data.keyword}&start_date=${data.start_date}&end_date=${data.end_date}`,
-    );
+    try {
+      const axiosInstance = this.axiosService.createInstance('dataGathering');
+      const response = await axiosInstance.get('/get-by-keyword', {
+        params: {
+          keyword: data.keyword,
+          start_date: data.start_date,
+          end_date: data.end_date,
+        },
+      });
 
-    return response.data;
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Data Gathering Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async crawling(data: CrawlingRequest) {
-    const response = await axios.post(
-      `${this.configService.get<string>('apiService.dataGathering')}/crawling`,
-      data,
-    );
-    return response.data;
+    try {
+      const axiosInstance = this.axiosService.createInstance('dataGathering');
+      const response = await axiosInstance.post('/crawling', data);
+
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Data Gathering Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async getQueue() {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.dataGathering')}/get-queue`,
-    );
+    try {
+      const axiosInstance = this.axiosService.createInstance('dataGathering');
+      const response = await axiosInstance.get('/get-queue');
 
-    return response.data;
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Data Gathering Error',
+        error.response?.status || 500,
+      );
+    }
   }
 }

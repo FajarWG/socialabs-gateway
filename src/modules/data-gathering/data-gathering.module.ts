@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
+
 import { DataGatheringService } from './data-gathering.service';
 import { DataGatheringResolver } from './data-gathering.resolver';
+import { HttpModule } from 'src/utils/http.module';
 
 @Module({
   imports: [HttpModule],

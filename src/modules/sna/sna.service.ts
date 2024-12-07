@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { HttpException, Injectable } from '@nestjs/common';
+
 import {
   BuzzerByIdRequest,
   // BuzzerRequest,
@@ -8,11 +8,11 @@ import {
   GraphRequest,
 } from './sna.dto';
 
-import { ConfigService } from '@nestjs/config';
+import { AxiosService } from 'src/utils/AxiosService';
 
 @Injectable()
 export class SNAService {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly axiosService: AxiosService) {}
 
   // async getBuzzer(data: BuzzerRequest) {
   //   const response = await axios.get(
@@ -23,33 +23,80 @@ export class SNAService {
   // }
 
   async getGraph(data: GraphRequest) {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.sna')}/graph?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
-    );
+    try {
+      const axiosInstance = this.axiosService.createInstance('sna');
+      const response = await axiosInstance.get('/graph', {
+        params: {
+          keyword: data.keyword,
+          num_topics: data.num_topics,
+          num_tweets: data.num_tweets,
+          topic_filter: data.topic,
+        },
+      });
 
-    return response.data;
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service SNA Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async getCommunity(data: CommunityRequest) {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.sna')}/community?keyword=${data.keyword}&num_topics=${data.num_topics}&num_tweets=${data.num_tweets}&topic_filter=${data.topic}`,
-    );
+    try {
+      const axiosInstance = this.axiosService.createInstance('sna');
+      const response = await axiosInstance.get('/community', {
+        params: {
+          keyword: data.keyword,
+          num_topics: data.num_topics,
+          num_tweets: data.num_tweets,
+          topic_filter: data.topic,
+        },
+      });
 
-    return response.data;
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service SNA Error',
+        error.response?.status || 500,
+      );
+    }
   }
-  async getBuzzerByProjectId(data: BuzzerByIdRequest) {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.sna')}/get-buzzer-by-project-id?&project_id=${data.project_id}`,
-    );
 
-    return response.data;
+  async getBuzzerByProjectId(data: BuzzerByIdRequest) {
+    try {
+      const axiosInstance = this.axiosService.createInstance('sna');
+      const response = await axiosInstance.get('/get-buzzer-by-project-id', {
+        params: {
+          project_id: data.project_id,
+        },
+      });
+
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service SNA Error',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async getCommunityByProjectId(data: CommunityByIdRequest) {
-    const response = await axios.get(
-      `${this.configService.get<string>('apiService.sna')}/get-community-by-project-id?&project_id=${data.project_id}`,
-    );
+    try {
+      const axiosInstance = this.axiosService.createInstance('sna');
+      const response = await axiosInstance.get('/get-community-by-project-id', {
+        params: {
+          project_id: data.project_id,
+        },
+      });
 
-    return response.data;
+      return response.data.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service SNA Error',
+        error.response?.status || 500,
+      );
+    }
   }
 }

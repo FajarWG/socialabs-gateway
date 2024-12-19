@@ -12,6 +12,7 @@ import { EmotionModule } from './modules/emotion/emotion.module';
 import { SNAModule } from './modules/sna/sna.module';
 import apiConfig from './config/api.config';
 import { RequestContextMiddleware } from './utils/RequestContextMiddleware';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { RequestContextMiddleware } from './utils/RequestContextMiddleware';
 
         return { token };
       },
-      playground: true,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     ProjectModule,
     UserModule,

@@ -42,6 +42,7 @@ export class SentimentResolver {
     };
     const results =
       await this.sentimentService.visualizeSentiment(data_request);
+
     return {
       sentiment: results.sentiment,
       sentiment_percentage: results.sentiment_percentage,

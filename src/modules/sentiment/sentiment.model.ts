@@ -27,7 +27,7 @@ export class VisualizeSentimentResponse {
   sentiment_percentage: SentimentPercentage;
 
   @Field()
-  sentiment_percentage_by_topic: object;
+  sentiment_percentage_by_topic: SentimentPercentageByTopic;
 
   @Field()
   total_data: number;

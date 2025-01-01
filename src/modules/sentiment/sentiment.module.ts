@@ -8,4 +8,4 @@ import { HttpModule } from 'src/utils/http.module';
   imports: [HttpModule],
   providers: [SentimentService, SentimentResolver],
 })
-export class EmotionModule {}
+export class SentimentModule {}

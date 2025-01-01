@@ -13,6 +13,7 @@ import { SNAModule } from './modules/sna/sna.module';
 import apiConfig from './config/api.config';
 import { RequestContextMiddleware } from './utils/RequestContextMiddleware';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { SentimentModule } from './modules/sentiment/sentiment.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
     DataGatheringModule,
     ChatbotModule,
     EmotionModule,
+    SentimentModule,
     SNAModule,
   ],
 })

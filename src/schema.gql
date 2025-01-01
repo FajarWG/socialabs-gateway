@@ -139,12 +139,55 @@ type InsideCommunityData {
   nodes: [NodeCommunity!]!
 }
 
+type SentimentPercentage {
+  positive: Float!
+  negative: Float!
+}
+
+type SentimentPercentageByTopic {
+  positive: Float!
+  negative: Float!
+}
+
+type VisualizeSentimentResponse {
+  sentiment: [InsideSentimentVisualize!]!
+  sentiment_percentage: SentimentPercentage!
+  sentiment_percentage_by_topic: SentimentPercentageByTopic!
+  total_data: Float!
+}
+
+type InsideSentimentVisualize {
+  conversation_id_str: String!
+  full_text: String!
+  id_str: String!
+  in_reply_to_screen_name: String!
+  predicted_sentiment_cnn: String!
+  predicted_sentiment_cnn_lstm: String!
+  predicted_sentiment_cnn_lstm_probability: String!
+  predicted_sentiment_cnn_probability: String!
+  probability: String!
+  processed_text: String!
+  projectId: String!
+  topic: String!
+  tweet_url: String!
+  user_id_str: String!
+  username: String!
+  _id: String!
+}
+
+type ClassifySentimentResponse {
+  success: Boolean!
+  total_data: Float!
+  data: String!
+}
+
 type Query {
   getProject(id: String!): ProjectType!
   getAllProjects(userId: String!, page: Int!, limit: Int!, name: String! = " "): ProjectResults!
   getByKeyword(keyword: String!, start_date: String!, end_date: String!): String!
   getPrompt(project_id: String!): String!
   visualizeEmotion(topic: String!, project_id: String!, model_type: String!): VisualizeEmotionResponse!
+  visualizeSentiment(topic: String!, project_id: String!, model_type: String!): VisualizeSentimentResponse!
   getGraph(keyword: String!, num_topics: Float!, num_tweets: Float!, topic: String!): InsideCommunityData!
   getCommunity(keyword: String!, num_topics: Float!, num_tweets: Float!, topic: String!): InsideCommunityData!
   getBuzzerByProject(project_id: String!): BuzzerByIdResponse!
@@ -162,6 +205,7 @@ type Mutation {
   crawling(access_token: String!, keywords: String!, total_tweet: Float!, projectId: String!): CrawlingResponse!
   postQuery(query: String!, project_id: String!): CrawlingResponse!
   classifyEmotion(tweet_ids: String!): ClassifyEmotionResponse!
+  classifySentiment(tweet_ids: String!): ClassifySentimentResponse!
 }
 
 input ProjectStatusInput {

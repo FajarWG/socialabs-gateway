@@ -2,11 +2,11 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { SentimentService } from './sentiment.service';
 import {
   ClassifySentimentResponse,
-  SentimentByIdResponse,
+  // SentimentByIdResponse,
   VisualizeSentimentResponse,
 } from './sentiment.model';
 import {
-  SentimentByIdRequest,
+  // SentimentByIdRequest,
   VisualizeSentimentRequest,
 } from './sentiment.dto';
 
@@ -15,7 +15,7 @@ export class SentimentResolver {
   constructor(private readonly sentimentService: SentimentService) {}
 
   @Mutation(() => ClassifySentimentResponse)
-  async classifyEmotion(
+  async classifySentiment(
     @Args('tweet_ids') tweet_ids: string,
   ): Promise<ClassifySentimentResponse> {
     const data = {
@@ -30,7 +30,7 @@ export class SentimentResolver {
   }
 
   @Query(() => VisualizeSentimentResponse)
-  async visualizeEmotion(
+  async visualizeSentiment(
     @Args('topic') topic: string,
     @Args('project_id') project_id: string,
     @Args('model_type') model_type: string,
@@ -50,18 +50,18 @@ export class SentimentResolver {
     };
   }
 
-  @Query(() => SentimentByIdResponse)
-  async getEmotionByProject(
-    @Args('project_id') project_id: string,
-  ): Promise<SentimentByIdResponse> {
-    const data_request: SentimentByIdRequest = {
-      project_id,
-    };
-    const results =
-      await this.sentimentService.getSentimentByProjectId(data_request);
-    return {
-      data: results.data,
-      total_data: results.total_data,
-    };
-  }
+  // @Query(() => SentimentByIdResponse)
+  // async getSentimentByProject(
+  //   @Args('project_id') project_id: string,
+  // ): Promise<SentimentByIdResponse> {
+  //   const data_request: SentimentByIdRequest = {
+  //     project_id,
+  //   };
+  //   const results =
+  //     await this.sentimentService.getSentimentByProjectId(data_request);
+  //   return {
+  //     data: results.data,
+  //     total_data: results.total_data,
+  //   };
+  // }
 }

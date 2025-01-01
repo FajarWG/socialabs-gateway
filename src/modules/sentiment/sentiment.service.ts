@@ -29,15 +29,12 @@ export class SentimentService {
   async visualizeSentiment(data: VisualizeSentimentRequest) {
     try {
       const axiosInstance = this.axiosService.createInstance('sentiment');
-      const response = await axiosInstance.get(`/visualize-sentiment`, {
-        params: {
-          topic: data.topic,
-          project_id: data.project_id,
-          model_type: data.model_type,
-        },
-      });
 
-      return response.data.data;
+      const response = await axiosInstance.get(
+        `/visualize-sentiment?project_id=${data.project_id}&topic=${data.topic}&model_type=${data.model_type}`,
+      );
+
+      return response.data;
     } catch (error) {
       throw new HttpException(
         error.response?.data || 'Service Sentiment Error',

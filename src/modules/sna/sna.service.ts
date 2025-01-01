@@ -34,7 +34,7 @@ export class SNAService {
         },
       });
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw new HttpException(
         error.response?.data || 'Service SNA Error',
@@ -55,7 +55,7 @@ export class SNAService {
         },
       });
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw new HttpException(
         error.response?.data || 'Service SNA Error',
@@ -73,7 +73,7 @@ export class SNAService {
         },
       });
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw new HttpException(
         error.response?.data || 'Service SNA Error',
@@ -85,13 +85,11 @@ export class SNAService {
   async getCommunityByProjectId(data: CommunityByIdRequest) {
     try {
       const axiosInstance = this.axiosService.createInstance('sna');
-      const response = await axiosInstance.get('/get-community-by-project-id', {
-        params: {
-          project_id: data.project_id,
-        },
-      });
+      const response = await axiosInstance.get(
+        `/get-community-by-project-id/${data.project_id}`,
+      );
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw new HttpException(
         error.response?.data || 'Service SNA Error',

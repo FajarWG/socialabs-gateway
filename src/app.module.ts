@@ -14,6 +14,7 @@ import apiConfig from './config/api.config';
 import { RequestContextMiddleware } from './utils/RequestContextMiddleware';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { SentimentModule } from './modules/sentiment/sentiment.module';
+import { TopicModule } from './modules/topic/topic.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { SentimentModule } from './modules/sentiment/sentiment.module';
     EmotionModule,
     SentimentModule,
     SNAModule,
+    TopicModule,
   ],
 })
 export class AppModule implements NestModule {

@@ -8,4 +8,5 @@ export default registerAs('apiService', () => ({
   sentiment: process.env.SENTIMENT_URL,
   emotion: process.env.EMOTION_URL,
   sna: process.env.SNA_URL,
+  topic: process.env.TOPIC_MODELLING_URL,
 }));

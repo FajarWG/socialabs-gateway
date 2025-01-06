@@ -1,21 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
-export class VisualizeEmotionResponse {
-  @Field(() => [InsideEmotionVisualize])
-  emotion: InsideEmotionVisualize[] | [];
-
-  @Field()
-  emotion_percentage: string;
-
-  @Field()
-  emotion_percentage_by_topic: string;
-
-  @Field()
-  total_data: number;
-}
-
-@ObjectType()
 export class EmotionProbability {
   @Field()
   Anger: number;
@@ -34,6 +19,21 @@ export class EmotionProbability {
 
   @Field()
   Sad: number;
+}
+
+@ObjectType()
+export class VisualizeEmotionResponse {
+  @Field(() => [InsideEmotionVisualize])
+  emotion: InsideEmotionVisualize[] | [];
+
+  @Field()
+  emotion_percentage: EmotionProbability;
+
+  @Field()
+  emotion_percentage_by_topic: EmotionProbability;
+
+  @Field()
+  total_data: number;
 }
 
 @ObjectType()

@@ -58,13 +58,6 @@ type CrawlingResponse {
   filename: String!
 }
 
-type VisualizeEmotionResponse {
-  emotion: [InsideEmotionVisualize!]!
-  emotion_percentage: String!
-  emotion_percentage_by_topic: String!
-  total_data: Float!
-}
-
 type EmotionProbability {
   Anger: Float!
   Fear: Float!
@@ -72,6 +65,13 @@ type EmotionProbability {
   Love: Float!
   Neutral: Float!
   Sad: Float!
+}
+
+type VisualizeEmotionResponse {
+  emotion: [InsideEmotionVisualize!]!
+  emotion_percentage: EmotionProbability!
+  emotion_percentage_by_topic: EmotionProbability!
+  total_data: Float!
 }
 
 type InsideEmotionVisualize {
@@ -199,6 +199,14 @@ type TopicDocByProjectResponse {
   data: [TopicDocument!]!
 }
 
+type TopicByProjectResponse {
+  context: String!
+  keyword: String!
+  projectId: String!
+  topicId: Float!
+  words: [String!]!
+}
+
 type Query {
   getProject(id: String!): ProjectType!
   getAllProjects(userId: String!, page: Int!, limit: Int!, name: String! = " "): ProjectResults!
@@ -210,6 +218,7 @@ type Query {
   getCommunity(keyword: String!, num_topics: Float!, num_tweets: Float!, topic: String!): InsideCommunityData!
   getBuzzerByProject(project_id: String!): BuzzerByIdResponse!
   getCommunityByProject(project_id: String!): CommunityByIdResponse!
+  topicByProject(project_id: String!): TopicByProjectResponse!
   topicDocByProject(project_id: String!): TopicDocByProjectResponse!
 }
 

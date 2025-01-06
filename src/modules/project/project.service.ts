@@ -49,9 +49,7 @@ export class ProjectService {
   async getProjectById(id: string): Promise<ProjectType> {
     try {
       const axiosInstance = this.axiosService.createInstance('project');
-      const response = await axiosInstance.get('/project', {
-        params: { id },
-      });
+      const response = await axiosInstance.get(`/project/${id}`);
 
       return response.data.data;
     } catch (error) {

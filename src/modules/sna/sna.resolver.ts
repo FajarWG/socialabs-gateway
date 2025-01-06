@@ -85,6 +85,7 @@ export class SNAResolver {
       project_id,
     };
     const results = await this.snaService.getBuzzerByProjectId(data_request);
+
     return {
       data: results.data,
       total_data: results.total_data,

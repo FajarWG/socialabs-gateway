@@ -42,7 +42,7 @@ export class EmotionResolver {
     return {
       emotion: results.emotion,
       emotion_percentage: results.emotion_percentage,
-      emotion_percentage_by_topic: results.emotion_percentage_by_topic,
+      emotion_percentage_by_topic: results.emotion_percentage_by_topic[0],
       total_data: results.total_data,
     };
   }

@@ -67,11 +67,10 @@ export class SNAService {
   async getBuzzerByProjectId(data: BuzzerByIdRequest) {
     try {
       const axiosInstance = this.axiosService.createInstance('sna');
-      const response = await axiosInstance.get('/get-buzzer-by-project-id', {
-        params: {
-          project_id: data.project_id,
-        },
-      });
+      const response = await axiosInstance.get(
+        `/get-buzzer-by-project-id/${data.project_id}`,
+      );
+      console.log(response);
 
       return response.data;
     } catch (error) {

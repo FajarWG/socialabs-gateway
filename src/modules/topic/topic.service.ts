@@ -24,6 +24,23 @@ export class TopicService {
     }
   }
 
+  async topicByProject(data: TopicDocByProjectRequest) {
+    try {
+      const axiosInstance = this.axiosService.createInstance('topic');
+
+      const response = await axiosInstance.get(
+        `/topic-by-project/${data.project_id}`,
+      );
+
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Service Topic Error',
+        error.response?.status || 500,
+      );
+    }
+  }
+
   async topicDocByProject(data: TopicDocByProjectRequest) {
     try {
       const axiosInstance = this.axiosService.createInstance('topic');

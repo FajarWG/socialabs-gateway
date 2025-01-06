@@ -35,3 +35,21 @@ export class TopicDocByProjectResponse {
   @Field(() => [TopicDocument])
   data: TopicDocument[];
 }
+
+@ObjectType()
+export class TopicByProjectResponse {
+  @Field()
+  context: string;
+
+  @Field()
+  keyword: string;
+
+  @Field()
+  projectId: string;
+
+  @Field()
+  topicId: number;
+
+  @Field(() => [String])
+  words: string[];
+}

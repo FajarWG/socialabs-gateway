@@ -23,7 +23,6 @@ import { TopicModule } from './modules/topic/topic.module';
       isGlobal: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
-      typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => {
